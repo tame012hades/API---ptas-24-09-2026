@@ -25,7 +25,15 @@ app.get('/', (req, res) => {
     res.send('API de Tarefas no ar');
 });
 
+
 app.get('/tarefas', (req, res) => {
+    const concluida = req.query.concluida;
+
+    if (concluida === 'true') {
+        const resultado = tarefas.filter(t => t.concluida === true);
+        return res.json(resultado);
+    }
+
     res.json(tarefas);
 });
 
