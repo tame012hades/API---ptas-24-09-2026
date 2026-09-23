@@ -1,72 +1,29 @@
-const express = require('express');
+//EXERCÍCIO 6 - TESTES
 
-const app = express();
-
-app.use(express.json());
-
-const tarefas = [
-    {
-        id: 1,
-        titulo: 'Estudar',
-        concluida: false
-    },
-    {
-        id: 2,
-        titulo: 'Fazer trabalho',
-        concluida: true
-    },
-    {
-        id: 3,
-        titulo: 'Ir para a escola',
-        concluida: false
-    }
-];
+// 1. GET 
+//http://localhost:3000/
+//Resposta: API de Tarefas no ar
 
 
-app.get('/', (req, res) => {
-    res.send('API de Tarefas no ar');
-});
+// 2. GET /tarefas
+//http://localhost:3000/tarefas
+//Retorna todas as tarefas
 
 
-app.get('/tarefas', (req, res) => {
-    const concluida = req.query.concluida;
-
-    if (concluida === 'true') {
-        const resultado = tarefas.filter(t => t.concluida === true);
-        return res.json(resultado);
-    }
-
-    res.json(tarefas);
-});
+// 3. GET /tarefas/:id
+//http://localhost:3000/tarefas/1
+//Retorna a tarefa com id 1
 
 
-app.get('/tarefas/:id', (req, res) => {
-    const id = Number(req.params.id);
-
-    const tarefa = tarefas.find(t => t.id === id);
-
-    if (!tarefa) {
-        return res.status(404).json({
-            erro: 'Tarefa não encontrada'
-        });
-    }
-
-    res.json(tarefa);
-});
+// 4. GET /tarefas?concluida=true
+//http://localhost:3000/tarefas?concluida=true
+//Retorna apenas as tarefas concluídas
 
 
-app.post('/tarefas', (req, res) => {
-    const novaTarefa = {
-        id: tarefas.length + 1,
-        titulo: req.body.titulo,
-        concluida: false
-    };
-
-    tarefas.push(novaTarefa);
-
-    res.status(201).json(novaTarefa);
-});
-
-app.listen(3000, () => {
-    console.log('Servidor rodando na porta 3000');
-});
+// 5. POST /tarefas
+//http://localhost:3000/tarefas
+//Body:
+//{
+//    "titulo": "Fazer exercícios"
+//{
+// } 
